@@ -6,6 +6,10 @@ awk '{print $4"\t"$1"\t"$2"\t"$3"\t+"}' macs_peaks.bed >homer_peaks.bed
 ## we don't need ~/biosoft/homer/bin/findMotifsGenome.pl because we have add all of the script to PATH
 findMotifsGenome.pl homer_peaks.bed hg19 motifDir -len 8,10,12
 annotatePeaks.pl    homer_peaks.bed hg19 1>peakAnn.xls 2>annLog.txt    #-go GODir
+
+awk '{print $4"\t"$1"\t"$2"\t"$3"\t+"}'  ../macs14_results/highQuaily_peaks.bed >highQuaily_homer.bed
+annotatePeaks.pl   highQuaily_homer.bed  hg19 1>highQuaily_peakAnn.xls 2>highQuaily_annLog.txt
+awk -F "\t" 'NR>1{ split($8, arr, "("); sub(" ","",arr[1]); print arr[1]}' highQuaily_peakAnn.xls  |sort |uniq -c |awk '{print $2"\t"$1}'
 #annotatePeaks.pl peaks.bed hg19 -go GODir 1>peakAnn.xls 2>annLog.txt 
 
 #	make sure that you have install Homer successfully and add the bin folder to the path :
@@ -39,9 +43,9 @@ cp seqlogo ~/my-bin/bin/
 # <http://www.cs.wisc.edu/~ghost/> to create PNG and PDF output, and 
 # ImageMagic's convert <http://www.imagemagick.org/> to create GIFs.
 # 
-# ./seqlogo -F PDF -f globin.fasta > globin.pdf   
-# ./seqlogo -F PNG -f globin.fasta > globin.png
-# ./seqlogo -F GIF -f globin.fasta > globin.png
+# ./seqlogo -F PDF -f globin.fasta > ../globin.pdf   
+# ./seqlogo -F PNG -f globin.fasta > ../globin.png
+# ./seqlogo -F GIF -f globin.fasta > ../globin.png
 # 
 
 ## Download and install seqlogo

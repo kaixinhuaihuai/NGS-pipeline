@@ -1,16 +1,17 @@
 ## step5 : alignment to   hg19/ using bowtie2 to do alignment 
 ##  ~/biosoft/bowtie/bowtie2-2.2.9/bowtie2-build  ~/biosoft/bowtie/hg19_index /hg19.fa  ~/biosoft/bowtie/hg19_index/hg19
 ## cat >run_bowtie2.sh
-ls *.fq.gz | while read id ; 
+ls *.fastq | while read id ; 
 ## if you do change the fq files by fastx tools, you need to ls *_clean.fq.gz
 do  
 echo $id
-~/biosoft/bowtie/bowtie2-2.2.9/bowtie2 -p 20 -x ~/biosoft/bowtie/hg19_index/hg19 -U $id   -S ${id%%.*}.sam  2>${id%%.*}.align.log; 
+~/biosoft/bowtie/bowtie2-2.2.9/bowtie2 -p 20 -x ~/biosoft/bowtie/hg19_index/hg19 -U $id   \
+										-S ${id%%.*}.sam  2>${id%%.*}.align.log; 
 ## firstly we just keep the high mapping quality reads according to ENCODE project guideline.
-samtools view -bhS -q 30  ${id%%.*}.sam > ${id%%.*}.highQuaily.bam  
+samtools view -bhS -q 30  ${id%%.*}.sam > ${id%%.*}.highQuality.bam  
 ## -F 1548 https://broadinstitute.github.io/picard/explain-flags.html 
-samtools sort   ${id%%.*}.highQuaily.bam ${id%%.*}.highQuaily.sorted  ## prefix for the output   
-samtools index ${id%%.*}.highQuaily.sorted.bam 
+samtools sort   ${id%%.*}.highQuality.bam ${id%%.*}.highQuality.sorted  ## prefix for the output   
+samtools index ${id%%.*}.highQuality.sorted.bam 
 
 ## Then we just keep the unique mapping reads according to the majority tutorial.
 grep -v "XS:i:" ${id%%.*}.sam |samtools view -bhS - >${id%%.*}.unique.bam

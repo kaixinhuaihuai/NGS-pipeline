@@ -1,6 +1,65 @@
 ## pre-step: download sratooweblogolkit/fastx_toolkit_0.0.13/fastqc/bowtie2/bwa/
 #############MACS2/HOMER/QuEST/mm9/hg19/bedtools/PeakRanger/blat/Ghostscript/weblogo/SWEMBL/SISSRs/CEAS
 
+
+## http://compbio.cs.toronto.edu/shrimp/
+cd ~/biosoft
+mkdir SHRiMP &&  cd SHRiMP
+wget http://compbio.cs.toronto.edu/shrimp/releases/SHRiMP_2_2_3.lx26.x86_64.tar.gz 
+tar zxvf SHRiMP_2_2_3.lx26.x86_64.tar.gz 
+cd SHRiMP_2_2_3
+export SHRIMP_FOLDER=$PWD
+
+## http://compbio.cs.toronto.edu/shrimp/README
+cd ~/biosoft/SHRiMP/SHRiMP_2_2_3 
+export SHRIMP_FOLDER=$PWD
+cd -
+## memory requirements: 3.0G x 4 x 4 =  48GB of RAM . I don't need to split the hg19.fa  
+$SHRIMP_FOLDER/bin/gmapper-cs  tmp.fq \
+~/biosoft/bowtie/hg19_index/hg19.fa  \
+-N 20  -E -h 80% 1>tmp.map.out 2>tmp.map.log 
+## -E : Enable SAM output.
+## -N : Use multiple threads 
+## -h 80% : Set the threshold score for a hit to 80% of the maximum possible score. 
+
+## http://samstat.sourceforge.net/
+cd ~/biosoft
+mkdir SAMStat &&  cd SAMStat
+wget http://nchc.dl.sourceforge.net/project/samstat/samstat-1.5.1.tar.gz
+tar zxvf samstat-1.5.1.tar.gz 
+./configure --prefix=/home/jmzeng/my-bin
+make 
+make install  
+~/my-bin/bin/samstat  -h
+
+## Download and install BWA
+cd ~/biosoft
+mkdir bwa &&  cd bwa
+#http://sourceforge.net/projects/bio-bwa/files/
+wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.15.tar.bz2 
+tar xvfj bwa-0.7.12.tar.bz2 # x extracts, v is verbose (details of what it is doing), f skips prompting for each individual file, and j tells it to unzip .bz2 files
+cd bwa-0.7.12
+make
+export PATH=$PATH:/path/to/bwa-0.7.12 # Add bwa to your PATH by editing ~/.bashrc file (or .bash_profile or .profile file)
+# /path/to/ is an placeholder. Replace with real path to BWA on your machine
+source ~/.bashrc
+# bwa index [-a bwtsw|is] index_prefix reference.fasta
+# ~/biosoft/bwa/bwa-0.7.15/bwa
+cd ~/biosoft/bwa 
+mkdir hg19_index &&  cd hg19_index
+~/biosoft/bwa/bwa-0.7.15/bwa index -p hg19bwaidx -a bwtsw ~/biosoft/bowtie/hg19_index/hg19.fa 
+# -p index name (change this to whatever you want)
+# -a index algorithm (bwtsw for long genomes and is for short genomes)
+ 
+cd ~/biosoft/bwa 
+mkdir mm10_index &&  cd mm10_index
+~/biosoft/bwa/bwa-0.7.15/bwa index -p mm10bwaidx -a bwtsw ~/biosoft/bowtie/hg19_index/hg19.fa 
+wget http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz  
+tar xzvf chromFa.tar.gz
+cat *fa >mm10_ucsc.fasta
+rm *fa 
+~/biosoft/bwa/bwa-0.7.15/bwa index -p mm10bwaidx -a bwtsw  mm10_ucsc.fasta
+
 ## Download and install sratoolkit
 ## http://www.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software
 ## http://www.ncbi.nlm.nih.gov/books/NBK158900/
