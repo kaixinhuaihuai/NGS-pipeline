@@ -1,5 +1,16 @@
-## pre-step: download sratooweblogolkit/fastx_toolkit_0.0.13/fastqc/bowtie2/bwa/
-#############MACS2/HOMER/QuEST/mm9/hg19/bedtools/PeakRanger/blat/Ghostscript/weblogo/SWEMBL/SISSRs/CEAS
+#!/bin/bash
+
+### ---------------
+###
+### Create: Jianming Zeng
+### Date: 2016-8-14
+### CAFS/SUSTC/Eli Lilly/University of Macau
+### Update Log: 2016-8-14  add reference + annotation for human/mouse  mm9/hg19 version
+### Update Log: 2016-8-12  add sratoolkit/weblogo/fastx_toolkit_0.0.13/fastqc/bowtie2/bwa/
+### Update Log: 2016-7-16  add MACS2/HOMER/QuEST/mm9/hg19/bedtools/
+### Update Log: 2016-7-15  add PeakRanger/blat/Ghostscript/weblogo/SWEMBL/SISSRs/CEAS
+###
+### --------------- 
 
 
 ## http://compbio.cs.toronto.edu/shrimp/

@@ -1,3 +1,17 @@
+#!/bin/bash
+
+### ---------------
+###
+### Create: Jianming Zeng
+### Date: 2016-8-14
+### CAFS/SUSTC/Eli Lilly/University of Macau
+### Update Log: 2016-8-14  add reference + annotation for human hg19 version
+### Update Log: 2016-8-12  add HISAT-Stringtie2-Ballgown pipeline
+### Update Log: 2016-7-16  add TopHat+Cufflinks+HTseq pipeline
+### Update Log: 2016-7-15  add bowtie2+RSEM+RNA-SeQC pipeline 
+###
+### ---------------
+
 mkdir -p ~/annotation/gencode/v24_GRCH37
 cd ~/annotation/gencode/v24_GRCH37
 wget -c -r -np -nd -k -L ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_24/GRCh37_mapping
