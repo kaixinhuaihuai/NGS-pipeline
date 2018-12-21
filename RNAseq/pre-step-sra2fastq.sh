@@ -1,3 +1,19 @@
+#!/bin/bash
+
+### ---------------
+###
+### Create: Jianming Zeng
+### Date: 2016-8-14
+### CAFS/SUSTC/Eli Lilly/University of Macau
+### Update Log: 2016-8-14  add reference + annotation for human hg19 version
+### Update Log: 2016-8-12  add HISAT-Stringtie2-Ballgown pipeline
+### Update Log: 2016-7-16  add TopHat+Cufflinks+HTseq pipeline
+### Update Log: 2016-7-15  add bowtie2+RSEM+RNA-SeQC pipeline 
+###
+### ---------------
+
+# 下面的代码是告诉大家，如果不会写shell脚本，就只能傻瓜式的替换，其实脚本很简单。
+
 #ls *sra |while read id; do ~/biosoft/sratoolkit/sratoolkit.2.6.3-centos_linux64/bin/fastq-dump --split-3 $id;done
 nohup ~/biosoft/sratoolkit/sratoolkit.2.6.3-centos_linux64/bin/fastq-dump --split-3  --gzip -A  	N61311_untreated	SRR1039508.sra &
 nohup ~/biosoft/sratoolkit/sratoolkit.2.6.3-centos_linux64/bin/fastq-dump --split-3  --gzip -A  	N61311_Dex		SRR1039509.sra &
